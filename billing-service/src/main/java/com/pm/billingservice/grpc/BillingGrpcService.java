@@ -1,5 +1,6 @@
 package com.pm.billingservice.grpc;
 
+import billing.BillingResponse;
 import billing.BillingServiceGrpc;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -16,6 +17,17 @@ public class BillingGrpcService extends BillingServiceGrpc.BillingServiceImplBas
         //using StreamObserver we can send and receive data back and forth communication through that client once the client has made a connection to tha server
 
         log.info("createBillingAccount request received {}", billingRequest.toString());
+
+        // Business logic -eg: save to database, peform calaulates etc
+
+        BillingResponse response = BillingResponse.newBuilder()
+                .setAccountId("12345")
+                .setStatus("ACTIVE")
+                .build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+
     }
 
 }
